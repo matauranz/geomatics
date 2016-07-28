@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+</head> 
+<body>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+
+ 
+  <script type="text/javascript">
+      
+      
+
+function getURLParameter(name) { return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null; }
+lon = getURLParameter('lon');
+lat = getURLParameter('lat');
+
+    var locations = [
+      ['url location ........', lat, lon, 6],
+      ['Some where in Au', -32.0, 151.0, 4],
+      ['Coogee Beach', -33.923036, 151.259052, 5],
+      ['Cronulla Beach', -34.028249, 151.157507, 3],
+      ['Linz Trig Doctors Rd...<br>-46.19278,168.87792 ', -46.19278,168.87792 , 2],
+      ['Storage Shed .....<br> -46.198167 ,168.868521', -46.198167 ,168.868521 , 1] ,  
+      
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 8,
+      //  -46.198,168.86
+      center: new google.maps.LatLng( lat,lon),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    var steve='hello there....'
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]+ '<br>'+ lat + lon +'Some more info'+'<br>'+'and again');
+          infowindow.open(map, marker);
+        }
+      })(marker, i))
+    }
+    locations
+  </script>
+  locations
+</body>
+</html>
